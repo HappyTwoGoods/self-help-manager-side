@@ -22,16 +22,20 @@
       return {
         navList: [
           {
-            'path': '/notCompleteOrder',
-            'name': '新订单'
+            'path': '/goods',
+            'name': '商品'
           },
           {
-            'path': '/allOrder',
-            'name': '所有订单'
+            'path': '/order',
+            'name': '订单'
           },
           {
-            'path': '/my',
-            'name': '我的'
+            'path': '/smallCook',
+            'name': '厨师'
+          },
+          {
+            'path': '/desk',
+            'name': '桌子'
           }
         ]
       }
@@ -57,27 +61,28 @@
 
   #bottom {
     position: fixed;
-    bottom:0;
+    bottom: 0;
     z-index: 1000;
     height: 50px;
     width: 100%;
     background-color: red;
   }
-footer{
-  margin-bottom: 0;
-}
+
+  footer {
+    margin-bottom: 0;
+  }
+
   .bottomDiv {
     line-height: 50px;
     display: inline-block;
     text-align: center;
-    width: 33.3%;
+    width: 25%;
   }
 
   a {
     text-decoration-line: none;
     color: #000;
   }
-
   .router-link-active {
     color: yellow;
   }

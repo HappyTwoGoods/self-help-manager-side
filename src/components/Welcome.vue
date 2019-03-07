@@ -4,42 +4,58 @@
       <img src="../assets/image/manager.jpg"/>
     </div>
     <div id="word">
-    <div id="first">欢迎进入系统</div>
-    <div id="change">请选择您的身份</div>
-    <div id="cook"><span>厨师</span></div>
-    <div id="manager"><span>管理员</span></div>
+      <div id="first">欢迎进入系统</div>
+      <div id="change">请选择您的身份</div>
+      <div id="cook"><span @click="getPage(1)">厨师</span></div>
+      <div id="manager"><span @click="getPage(2)">管理员</span></div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "Welcome"
+    name: "Welcome",
+    methods: {
+      getPage(num) {
+        if (num == 1) {
+          window.location.href = '/cook'
+        }
+        if (num == 2) {
+          window.location.href = '/manager'
+          return;
+        }
+        return;
+      }
+    }
   }
 </script>
 
 <style scoped>
-  #max{
+  #max {
     font-family: 仿宋;
     width: 100%;
     height: 100%;
   }
-  #background{
+
+  #background {
     width: 100%;
     height: 100%;
     position: fixed;
     z-index: 0;
   }
-  img{
+
+  img {
     z-index: 0;
     width: 100%;
     height: 100%;
   }
-  #word{
+
+  #word {
     width: 100%;
     position: fixed;
     z-index: 2;
   }
+
   #first {
     width: 100%;
     font-weight: bolder;
@@ -48,13 +64,15 @@
     margin-top: 50%;
     text-align: center;
   }
-  #change{
+
+  #change {
     text-align: center;
     margin-top: 15%;
     font-size: 25px;
     color: yellow;
   }
-  #cook{
+
+  #cook {
     display: inline-block;
     text-align: center;
     color: yellow;
@@ -62,7 +80,8 @@
     font-size: 20px;
     width: 47%;
   }
-  #manager{
+
+  #manager {
     display: inline-block;
     text-align: center;
     color: yellow;
@@ -70,8 +89,9 @@
     font-size: 20px;
     width: 47%;
   }
-  span{
-    background-color: rgba(238,0,0,5);
+
+  span {
+    background-color: rgba(238, 0, 0, 0.5);
     padding: 2% 5% 2%;
     border-radius: 25px;
   }
