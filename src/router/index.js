@@ -10,6 +10,7 @@ import SmallCook from '@/page/Manager/Cook'
 import Desk from '@/page/Manager/Desk'
 import Goods from '@/page/Manager/Goods'
 import Order from '@/page/Manager/Order'
+import Login from '@/page/Login'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router({
           component: SmallCook
         }
       ]
+    },
+    {
+      path:"/login",
+      name:"Login",
+      component:Login
     }
   ]
 })

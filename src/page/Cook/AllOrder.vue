@@ -1,11 +1,10 @@
 <template>
   <div>
-    <div></div>
+    <div>1212</div>
   </div>
 </template>
 
 <script>
-  import {service} from '../../js/api.js'
 
   export default {
     name: "AllOrder",
@@ -14,10 +13,12 @@
 
     },
     mounted() {
-
+      this.getTest()
     },
-    methods(){
-
+    methods: {
+      getTest() {
+        console.log("liang")
+      }
     }
   }
 </script>
