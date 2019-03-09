@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Welcome from '@/components/Welcome'
 import Cook from '@/components/Cook'
-import NotCompleteOrder from '@/page/Cook/NotCompleteOrder'
+import NewOrder from '@/page/Cook/NewOrder'
 import My from '@/page/Cook/My'
-import AllOrder from '@/page/Cook/AllOrder'
+import Producting from '@/page/Cook/Producting'
 import Manager from '@/components/Manager'
 import SmallCook from '@/page/Manager/Cook'
 import Desk from '@/page/Manager/Desk'
@@ -26,17 +26,17 @@ export default new Router({
       path: '/cook',
       name: 'Cook',
       component: Cook,
-      redirect: 'NotCompleteOrder',
+      redirect: 'NewOrder',
       children: [
         {
-          path: '/notCompleteOrder',
-          name: 'NotCompleteOrder',
-          component: NotCompleteOrder
+          path: '/newOrder',
+          name: 'NewOrder',
+          component: NewOrder
         },
         {
-          path: "/allOrder",
-          name: 'AllOrder',
-          component: AllOrder
+          path: "/producting",
+          name: 'Producting',
+          component: Producting
         },
         {
           path: "/my",

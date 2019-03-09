@@ -73,6 +73,7 @@
   }
 
   .bottomDiv {
+    font-size: 20px;
     line-height: 50px;
     display: inline-block;
     text-align: center;

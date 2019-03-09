@@ -22,12 +22,12 @@
       return {
         navList: [
           {
-            'path': '/notCompleteOrder',
+            'path': '/newOrder',
             'name': '新订单'
           },
           {
-            'path': '/allOrder',
-            'name': '所有订单'
+            'path': '/producting',
+            'name': '已接订单'
           },
           {
             'path': '/my',
@@ -45,16 +45,6 @@
 </script>
 
 <style scoped>
-  .page {
-    width: 100%;
-    height: 100%;
-  }
-
-  #content {
-    width: 100%;
-    height: 90%;
-  }
-
   #bottom {
     position: fixed;
     bottom:0;
@@ -63,14 +53,12 @@
     width: 100%;
     background-color: red;
   }
-footer{
-  margin-bottom: 0;
-}
   .bottomDiv {
     line-height: 50px;
     display: inline-block;
     text-align: center;
     width: 33.3%;
+    font-size: 20px;
   }
 
   a {
