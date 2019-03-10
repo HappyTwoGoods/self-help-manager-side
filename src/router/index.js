@@ -11,6 +11,7 @@ import Desk from '@/page/Manager/Desk'
 import Goods from '@/page/Manager/Goods'
 import Order from '@/page/Manager/Order'
 import Login from '@/page/Login'
+import AccountInfo from '@/page/AccountInfo'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path:"/login",
       name:"Login",
       component:Login
+    },
+    {
+      path:"/accountInfo",
+      name:"AccountInfo",
+      component:AccountInfo
     }
   ]
 })
