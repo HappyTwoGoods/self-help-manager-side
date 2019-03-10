@@ -2,6 +2,9 @@
   <div id="max">
     <div id="background"></div>
     <div id="content">
+      <div>
+        返回
+      </div>
       <div id="logo">
         <img src="../assets/image/logo.jpg"/>
       </div>
