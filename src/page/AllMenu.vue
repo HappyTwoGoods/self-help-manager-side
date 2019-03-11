@@ -10,7 +10,8 @@
       <div id="goods">
         <div class="goods" v-for="item in goodsList">
           <div id="left">
-            <img src="../assets/image/logo.jpg"/>
+            <img src="../assets/image/logo.jpg" @click="getUpdateGoods(item.id)"/>
+            <!--<router-link :to="path:'/updateGoods'"><img src="../assets/image/logo.jpg"/></router-link>-->
           </div>
           <div id="right">
             <table cellspacing="0px">
@@ -82,6 +83,9 @@
             return
           }
         })
+      },
+      getUpdateGoods(id){
+        this.$router.push({path:'/updateGoods',query:{goodsId:id}})
       }
     }
   }
