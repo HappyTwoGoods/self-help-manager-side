@@ -12,6 +12,9 @@ import Goods from '@/page/Manager/Goods'
 import Order from '@/page/Manager/Order'
 import Login from '@/page/Login'
 import AccountInfo from '@/page/AccountInfo'
+import AllOrder from '@/page/AllOrder'
+import AllMenu from '@/page/AllMenu'
+import InsertGoods from '@/page/InsertGoods'
 
 Vue.use(Router)
 
@@ -83,6 +86,21 @@ export default new Router({
       path:"/accountInfo",
       name:"AccountInfo",
       component:AccountInfo
+    },
+    {
+      path:"/allOrder",
+      name:"AllOrder",
+      component:AllOrder
+    },
+    {
+      path:"/allMenu",
+      name:"AllMenu",
+      component:AllMenu
+    },
+    {
+      path:"/insertGoods",
+      name:"InsertGoods",
+      component:InsertGoods
     }
   ]
 })

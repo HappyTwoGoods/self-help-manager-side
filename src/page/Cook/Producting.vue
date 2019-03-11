@@ -125,7 +125,7 @@
 
   #head {
     position: fixed;
-    background-color: red;
+    background: linear-gradient(45deg, #FFFAFA, #FF0000);
     z-index: 1000;
     height: 50px;
     width: 100%;
@@ -159,11 +159,11 @@
   }
 
   .aa {
-    width: 20%;
+    width: 24%;
   }
 
   .aaa {
-    width: 44%;
+    width: 40%;
   }
 
   span {

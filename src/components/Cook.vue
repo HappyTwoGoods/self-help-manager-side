@@ -51,7 +51,7 @@
     z-index: 1000;
     height: 50px;
     width: 100%;
-    background-color: red;
+    background: linear-gradient(45deg, #FF0000,#FFFAFA);
   }
   .bottomDiv {
     line-height: 50px;

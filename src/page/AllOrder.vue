@@ -9,8 +9,8 @@
               <td class="a">序号</td>
               <td class="aa">菜名</td>
               <td class="a">数量</td>
-              <td class="aaa">时间</td>
-              <td class="a">操作</td>
+              <td class="aaaa">时间</td>
+              <td class="aaa">状态</td>
             </tr>
           </table>
         </div>
@@ -19,20 +19,24 @@
             <td class="a">{{index+1}}</td>
             <td class="aa">{{item.goodsName}}</td>
             <td class="a">{{item.num}}</td>
-            <td class="aaa">{{buildDate(item.updateTime)}}</td>
-            <td class="a" @click="getChangeState(item.id)"><span>接单</span></td>
+            <td class="aaaa">{{buildDate(item.updateTime)}}</td>
+            <td class="aaa" v-show="item.status==0"><span>已取消</span></td>
+            <td class="aaa" v-show="item.status==1"><span>待接单</span></td>
+            <td class="aaa" v-show="item.status==2"><span>制作中</span></td>
+            <td class="aaa" v-show="item.status==3"><span>已完成</span></td>
           </tr>
         </table>
+        <div id="back"><span id="backOne" @click="goBack()">返回</span></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {service} from "../../js/api";
+  import {service} from "../js/api";
 
   export default {
-    name: "NewOrder",
+    name: "AllOrder",
     data() {
       return {
         order: null,
@@ -43,7 +47,7 @@
     },
     methods: {
       getOrder() {
-        service("get", "/cook/selectOrderByState", {state: 1}).then(data => {
+        service("get", "/cook/selectOrderByState", {}).then(data => {
           if (data === undefined) {
             return
           }
@@ -56,24 +60,6 @@
             return
           }
         })
-      },
-      getChangeState(billId) {
-        service("get", "/cook/changeOrderStatus", {orderId: billId}).then(
-          data => {
-            if (data === undefined) {
-              return
-            }
-            if (data.code !== 200 && data.code !== 404) {
-              alert(data.message)
-              window.location.href = "/cook"
-              return
-            }
-            if (data.code == 200) {
-              alert(data.message)
-              window.location.href = "/cook"
-            }
-          }
-        )
       },
       buildDate(time) {
         let date = new Date(time),
@@ -89,6 +75,9 @@
           (hour < 10 ? '0' + hour : hour) + ':' +
           (min < 10 ? '0' + min : min) + ':' +
           (senders < 10 ? '0' + senders : senders)
+      },
+      goBack(){
+        window.location.href="/my"
       }
     }
   }
@@ -98,6 +87,7 @@
   #max {
     width: 100%;
     height: 100%;
+    padding-bottom: 50px;
   }
 
   #background {
@@ -123,7 +113,7 @@
 
   #head {
     position: fixed;
-    background: linear-gradient(45deg, #FFFAFA, #FF0000);
+    background: linear-gradient(45deg, #FF0000,#FFFAFA);
     z-index: 1000;
     height: 50px;
     width: 100%;
@@ -157,17 +147,30 @@
   }
 
   .aa {
-    width: 24%;
+    width: 20%;
   }
-
-  .aaa {
-    width: 40%;
-  }
-
+.aaa{
+  width: 18%;
+}
   span {
-    color: red;
+    color: grey;
     border-radius: 12px;
-    background-color: rgba(255, 255, 0, 0.5);
+    background-color: rgba(211, 211, 211, 0.5);
   }
-
+  #back{
+    background: linear-gradient(45deg, #FFFAFA, #FF0000);
+    text-align: left;
+    line-height: 50px;
+    display: inline-block;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+  }
+#backOne{
+margin-left: 10%;
+  padding: 2% 5% 2%;
+  border-radius: 25px;
+}
 </style>
