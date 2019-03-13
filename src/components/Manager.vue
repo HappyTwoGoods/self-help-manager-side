@@ -23,7 +23,7 @@
         navList: [
           {
             'path': '/goods',
-            'name': '商品'
+            'name': '菜单'
           },
           {
             'path': '/order',
@@ -65,7 +65,7 @@
     z-index: 1000;
     height: 50px;
     width: 100%;
-    background-color: red;
+    background: linear-gradient(45deg, #FFFAFA, #FF0000);
   }
 
   footer {
@@ -84,6 +84,7 @@
     text-decoration-line: none;
     color: #000;
   }
+
   .router-link-active {
     color: yellow;
   }
