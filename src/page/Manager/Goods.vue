@@ -112,7 +112,7 @@
     width: 100%;
     height: 100%;
     position: fixed;
-    z-index: 1;
+    z-index: 999;
   }
 
   #goods {
@@ -143,7 +143,7 @@ input:focus{
     border-top: none;
     border-right: none;
     border-left: none;
-    border-bottom-color: #000;
+    border-bottom:0.5px black solid;
     float: left;;
     width: 35%;
   }
@@ -159,7 +159,7 @@ select:focus{
     border-top: none;
     border-right: none;
     border-left: none;
-    border-bottom:2px #000 solid;
+    border-bottom:0.5px #000 solid;
     background: transparent;
     margin-top: 5%;
     margin-left: 8%;
