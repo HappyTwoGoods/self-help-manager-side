@@ -8,7 +8,7 @@
           <div class="input">
             <input type="text" v-model="cookName" placeholder="请输入姓名" @blur="getCook"/></div>
           <div class="input">
-            <span>查询</span><span>新增</span></div>
+            <span>查询</span><span @click="getAdd">新增</span></div>
           <div class="input">
             <select v-model="status" @change="getCook">
               <option value="">全部</option>
@@ -69,6 +69,9 @@
           }
         })
       },
+      getAdd() {
+        this.$router.push({path:"/addCook"})
+      },
       deleteCook(id) {
         if (confirm("确认删除吗？")) {
           service("get", "/manager/delete/cookInfo", {
@@ -120,22 +123,26 @@
     height: 80px;
     width: 100%;
   }
-  .input{
+
+  .input {
     display: inline-block;
     float: left;
     width: 33%;
   }
+
   #input {
     width: 100%;
     display: inline-block;
     line-height: 50px;
     text-align: center;
   }
-.input span{
-  border-radius: 25px;
-  background: azure;
-  padding: 2% 5%;
-}
+
+  .input span {
+    border-radius: 25px;
+    background: azure;
+    padding: 2% 5%;
+  }
+
   input {
     width: 80px;
     background: transparent;
@@ -144,9 +151,11 @@
     border-top: none;
     border-bottom: 0.5px black solid;
   }
-input:focus{
-  outline: none;
-}
+
+  input:focus {
+    outline: none;
+  }
+
   select {
     background: transparent;
     border-left: none;
@@ -155,9 +164,11 @@ input:focus{
     border-bottom: 0.5px black solid;
     margin-right: 0;
   }
-select:focus{
-  outline: none;
-}
+
+  select:focus {
+    outline: none;
+  }
+
   #cook {
     padding-top: 80px;
     width: 100%;
@@ -186,7 +197,7 @@ select:focus{
   }
 
   #bottomDiv {
-    height: 70px;
+    height: 150px;
   }
 
   .a {

@@ -16,6 +16,7 @@ import AllOrder from '@/page/AllOrder'
 import AllMenu from '@/page/AllMenu'
 import InsertGoods from '@/page/InsertGoods'
 import UpdateGoods from '@/page/UpdateGoods'
+import AddCook from '@/page/AddCook'
 
 Vue.use(Router)
 
@@ -82,6 +83,11 @@ export default new Router({
       path: "/login",
       name: "Login",
       component: Login
+    },
+    {
+      path: "/addCook",
+      name: "AddCook",
+      component: AddCook
     },
     {
       path: "/accountInfo",
