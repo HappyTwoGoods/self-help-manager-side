@@ -6,9 +6,9 @@
       <div id="head">
         <div id="input">
           <div class="input">
-            <input type="text" v-model="cookName" placeholder="请输入姓名" @blur="getCook"/></div>
+            <input type="text" v-model="cookName" placeholder="请输入姓名" @blur="getCook"/>查询</div>
           <div class="input">
-            <span>查询</span><span @click="getAdd">新增</span></div>
+            <span @click="getAdd">新增</span></div>
           <div class="input">
             <select v-model="status" @change="getCook">
               <option value="">全部</option>
@@ -139,12 +139,13 @@
 
   .input span {
     border-radius: 25px;
-    background: azure;
-    padding: 2% 5%;
+    background-color: crimson;
+    padding: 5% 10%;
   }
 
   input {
-    width: 80px;
+    margin-left: 5%;
+    width:65px;
     background: transparent;
     border-left: none;
     border-right: none;
@@ -184,7 +185,7 @@
   }
 
   #cook tr {
-    height: 70px;
+    height: 40px;
   }
 
   #cook td {

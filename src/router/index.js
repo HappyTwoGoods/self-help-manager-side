@@ -17,6 +17,7 @@ import AllMenu from '@/page/AllMenu'
 import InsertGoods from '@/page/InsertGoods'
 import UpdateGoods from '@/page/UpdateGoods'
 import AddCook from '@/page/AddCook'
+import AddDesk from '@/page/AddDesk'
 
 Vue.use(Router)
 
@@ -113,6 +114,11 @@ export default new Router({
       path: "/updateGoods",
       name: "UpdateGoods",
       component: UpdateGoods
+    },
+    {
+      path: "/addDesk",
+      name: "AddDesk",
+      component: AddDesk
     }
   ]
 })

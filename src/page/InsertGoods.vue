@@ -42,6 +42,9 @@
   import {service} from "../js/api";
   import $ from 'jquery'
 
+  import axios from 'axios'
+  // Vue.prototype.$ajax = axios;
+
   export default {
     name: "InsertGoods",
     data(){
