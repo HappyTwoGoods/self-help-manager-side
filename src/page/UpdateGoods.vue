@@ -48,7 +48,7 @@
     name: "UpdateGoods",
     data() {
       return {
-        file: null,
+        file: '',
         name: null,
         price: null,
         type: null,
@@ -91,7 +91,7 @@
         let formData = new FormData();
         formData.append("photo", this.file);
         formData.append("goodsId", this.goodsId);
-        axios.post("/api/cook/addGoods", formData).then(response => {
+        axios.post("/api/cook/updateGoodsImage", formData).then(response => {
           if (response.status === 200)
             if (response.data.code === 401) {
               window.location.href = "/login"
@@ -99,7 +99,7 @@
             }
           if (response.data.code === 200) {
             alert("修改成功")
-            window.location.href = "/allMenu"
+            // window.location.href = "/allMenu"
             return
           }
           if (response.data.code !== 200) {
