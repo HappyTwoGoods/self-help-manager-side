@@ -65,39 +65,32 @@
       getFile: function (event) {
         this.file = event.target.files[0];
       },
-      goChange(event) {
-        if(this.file==""){
-          service("post", "/cook/updateGoods", {goodsId:this.goodsId,
-            goodsName: this.name, type: this.type,
-            price: this.price, discount: this.discount,
-            limit: this.limit, num: this.goodsNum,
-            describe: this.describe
-          }).then(data => {
-            if (data === undefined) {
-              return
-            }
-            if (data.code !== 200) {
-              alert(data.message)
-            }
-            if (data.code === 200) {
-              alert("操作成功")
-              window.location.href = "/allMenu"
-            }
-          })
-          return
-        }
+      goChange() {
+        service("post", "/cook/updateGoods", {
+          goodsId: this.goodsId,
+          goodsName: this.name, type: this.type,
+          price: this.price, discount: this.discount,
+          limit: this.limit, num: this.goodsNum,
+          describe: this.describe
+        }).then(data => {
+          if (data === undefined) {
+            return
+          }
+          if (data.code !== 200) {
+            alert(data.message)
+          }
+          if (data.code === 200) {
+            alert("操作成功")
+            window.location.href = "/allMenu"
+          }
+        })
+      },
+      chageImage(event) {
         event.preventDefault();
         let formData = new FormData();
-        formData.append("goodsId", this.goodsId)
         formData.append("photo", this.file);
-        formData.append("goodsName", this.name);
-        formData.append("type", this.type)
-        formData.append("price", this.price)
-        formData.append("discount", this.discount)
-        formData.append("limit", this.limit)
-        formData.append("num", this.goodsNum)
-        formData.append("describe", this.describe)
-        axios.post("/api/cook/updateGoods", formData).then(response => {
+        formData.append("goodId", this.goodsId);
+        axios.post("/api/cook/addGoods", formData).then(response => {
           if (response.status === 200)
             if (response.data.code === 401) {
               window.location.href = "/login"
