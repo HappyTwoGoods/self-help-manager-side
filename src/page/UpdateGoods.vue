@@ -7,6 +7,7 @@
       </div>
       <div id="middle">
         图片<input type="file" @change="getFile($event)"/><br/>
+        <input type="button" value="更换图片" @click="changeImage($event)"/><br>
         菜名<input type="text" v-model="name"/><br/>
         价格<input type="text" v-model="price"/><br/>
         类型<select name="goodsType" id="goodsType" v-model="type">
@@ -32,7 +33,7 @@
         限购<input type="text" v-model="limit" placeholder="0代表不限购"/><br/>
         余量<input type="text" v-model="goodsNum"/><br/>
         描述<input type="text" v-model="describe"/><br/>
-        <input type="button" value="提交" @click="goChange($event)"/>
+        <input type="button" value="提交" @click="goChange()"/>
         <input type="button" value="删除" @click="goDelete()"/>
       </div>
     </div>
@@ -85,11 +86,11 @@
           }
         })
       },
-      chageImage(event) {
+      changeImage(event) {
         event.preventDefault();
         let formData = new FormData();
         formData.append("photo", this.file);
-        formData.append("goodId", this.goodsId);
+        formData.append("goodsId", this.goodsId);
         axios.post("/api/cook/addGoods", formData).then(response => {
           if (response.status === 200)
             if (response.data.code === 401) {
