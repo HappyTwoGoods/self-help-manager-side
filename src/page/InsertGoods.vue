@@ -6,10 +6,10 @@
         <span @click="goBack">&lt;返回</span>
       </div>
       <div id="middle">
-        图片<input type="file" /><br/>
+        图片<input type="file" @change="getFile($event)"/><br/>
         菜名<input type="text" v-model="name"/><br/>
         价格<input type="text" v-model="price"/><br/>
-        类型<select name="goodsType" id="goodsType">
+        类型<select name="goodsType" id="goodsType" v-model="type">
         <option value="1">主食</option>
         <option value="2">饮品</option>
         <option value="3">汤羹</option>
@@ -17,7 +17,7 @@
         <option value="5">凉菜</option>
         <option value="6">烧烤</option>
       </select><br/>
-        打折<select name="discount" id="discount">
+        打折<select name="discount" id="discount" v-model="discount">
         <option value="10">10折</option>
         <option value="9">9折</option>
         <option value="8">8折</option>
@@ -32,58 +32,65 @@
         限购<input type="text" v-model="limit" placeholder="0代表不限购"/><br/>
         余量<input type="text" v-model="goodsNum"/><br/>
         描述<input type="text" v-model="describe"/><br/>
-        <input type="button" value="提交" @click="goInsert()"/>
+        <input type="button" value="提交" @click="goInsert($event)"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {service} from "../js/api";
-  import $ from 'jquery'
-
   import axios from 'axios'
-  // Vue.prototype.$ajax = axios;
 
   export default {
     name: "InsertGoods",
-    data(){
-      return{
-        photo:"aa",
-        name:null,
-        price:null,
-        type:null,
-        discount:null,
-        limit:null,
-        goodsNum:null,
-        describe:null
+    data() {
+      return {
+        file: '',
+        name: null,
+        price: 0,
+        type: 1,
+        discount: 10,
+        limit: 0,
+        goodsNum: 1000,
+        describe: null
       }
     },
-    methods:{
-      goInsert(){
-        this.type=$("#goodsType").val()
-        this.discount=$("#discount").val()
-        service("post","/cook/addGoods",{
-          goodsName:this.name,type:this.type,
-          price:this.price,discount:this.discount,
-          limit:this.limit,image:this.photo,
-          num:this.goodsNum,describe: this.describe
-        }).then(data=>{
-          if(data===undefined){
+    methods: {
+      getFile: function (event) {
+        this.file = event.target.files[0];
+      },
+      goInsert(event) {
+        event.preventDefault();
+        let formData = new FormData();
+        formData.append("photo", this.file);
+        formData.append("goodsName", this.name);
+        formData.append("type", this.type)
+        formData.append("price", this.price)
+        formData.append("discount", this.discount)
+        formData.append("limit", this.limit)
+        formData.append("num", this.goodsNum)
+        formData.append("describe", this.describe)
+        axios.post("/api/cook/addGoods", formData).then(response => {
+          if (response.status === 200)
+            if (response.data.code === 401) {
+              window.location.href = "/login"
+              return
+            }
+          if (response.data.code === 200) {
+            if (confirm("添加成功，是否继续添加")) {
+              window.location.href = "/insertGoods"
+            }
+            window.location.href="/allMenu"
             return
           }
-          if(data.code!==200){
-            alert(data.message)
+          if (response.data.code !== 200) {
+            alert(response.data.message)
+            return
           }
-          if(data.code===200){
-            alert("操作成功")
-            window.location.href="/allMenu"
-          }
-
         })
       },
-      goBack(){
-        window.location.href="/allMenu"
+      goBack() {
+        window.location.href = "/allMenu"
       }
     }
   }
@@ -113,7 +120,7 @@
   }
 
   #head {
-    background: linear-gradient(45rad,white,red);
+    background: linear-gradient(45rad, white, red);
     width: 100%;
     height: 50px;
     display: inline-block;
@@ -121,27 +128,33 @@
     line-height: 50px;
     padding-left: 25px;
   }
-  input{
+
+  input {
     margin-top: 5%;
   }
-  input[type="text"]{
+
+  input[type="text"] {
     height: 25px;
-    width:50%;
+    width: 50%;
   }
-  select{
+
+  select {
     margin-top: 5%;
     height: 25px;
-    width:50%;
+    width: 50%;
   }
-  input[type="button"]{
+
+  input[type="button"] {
     height: 25px;
-    width:20%;
+    width: 20%;
   }
-  input[type="file"]{
+
+  input[type="file"] {
     height: 25px;
-    width:50%;
+    width: 50%;
   }
-  input:focus{
+
+  input:focus {
     outline: none;
   }
 </style>

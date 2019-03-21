@@ -6,7 +6,7 @@
         <span @click="goBack">&lt;返回</span>
       </div>
       <div id="middle">
-        图片<input type="file"/><br/>
+        图片<input type="file" @change="getFile($event)"/><br/>
         菜名<input type="text" v-model="name"/><br/>
         价格<input type="text" v-model="price"/><br/>
         类型<select name="goodsType" id="goodsType" v-model="type">
@@ -32,7 +32,7 @@
         限购<input type="text" v-model="limit" placeholder="0代表不限购"/><br/>
         余量<input type="text" v-model="goodsNum"/><br/>
         描述<input type="text" v-model="describe"/><br/>
-        <input type="button" value="提交" @click="goChange()"/>
+        <input type="button" value="提交" @click="goChange($event)"/>
         <input type="button" value="删除" @click="goDelete()"/>
       </div>
     </div>
@@ -41,13 +41,13 @@
 
 <script>
   import {service} from "../js/api";
-  import $ from 'jquery'
+  import axios from 'axios'
 
   export default {
     name: "UpdateGoods",
     data() {
       return {
-        photo: null,
+        file: null,
         name: null,
         price: null,
         type: null,
@@ -55,41 +55,71 @@
         limit: null,
         goodsNum: null,
         describe: null,
-        goodsId:null
+        goodsId: null
       }
     },
     mounted() {
       this.goGoodsInfo()
     },
     methods: {
-      goChange() {
-        this.type = $("#goodsType").val()
-        this.discount = $("#discount").val()
-        service("post", "/cook/updateGoods", {goodsId:this.goodsId,
-          goodsName: this.name, type: this.type,
-          price: this.price, discount: this.discount,
-          limit: this.limit, image: this.photo,
-          num: this.goodsNum, describe: this.describe
-        }).then(data => {
-          if (data === undefined) {
+      getFile: function (event) {
+        this.file = event.target.files[0];
+      },
+      goChange(event) {
+        if(this.file==""){
+          service("post", "/cook/updateGoods", {goodsId:this.goodsId,
+            goodsName: this.name, type: this.type,
+            price: this.price, discount: this.discount,
+            limit: this.limit, num: this.goodsNum,
+            describe: this.describe
+          }).then(data => {
+            if (data === undefined) {
+              return
+            }
+            if (data.code !== 200) {
+              alert(data.message)
+            }
+            if (data.code === 200) {
+              alert("操作成功")
+              window.location.href = "/allMenu"
+            }
+          })
+          return
+        }
+        event.preventDefault();
+        let formData = new FormData();
+        formData.append("goodsId", this.goodsId)
+        formData.append("photo", this.file);
+        formData.append("goodsName", this.name);
+        formData.append("type", this.type)
+        formData.append("price", this.price)
+        formData.append("discount", this.discount)
+        formData.append("limit", this.limit)
+        formData.append("num", this.goodsNum)
+        formData.append("describe", this.describe)
+        axios.post("/api/cook/updateGoods", formData).then(response => {
+          if (response.status === 200)
+            if (response.data.code === 401) {
+              window.location.href = "/login"
+              return
+            }
+          if (response.data.code === 200) {
+            alert("修改成功")
+            window.location.href = "/allMenu"
             return
           }
-          if (data.code !== 200) {
-            alert(data.message)
+          if (response.data.code !== 200) {
+            alert(response.data.message)
+            return
           }
-          if (data.code === 200) {
-            alert("操作成功")
-            window.location.href = "/allMenu"
-          }
-
         })
       },
       goBack() {
         window.location.href = "/allMenu"
       },
       goGoodsInfo() {
-        this.goodsId=this.$route.query.goodsId;
-        service("get", "/cook/select/goodsById", {goodsId:this.goodsId}).then(
+        this.goodsId = this.$route.query.goodsId;
+        service("get", "/cook/select/goodsById", {goodsId: this.goodsId}).then(
           data => {
             if (data === undefined) {
               alert("请求失败，稍后再试！")
@@ -106,7 +136,6 @@
               this.type = data.data.type;
               this.price = data.data.price;
               this.discount = data.data.discount;
-              this.photo = data.data.image;
               this.limit = data.data.limit;
               this.goodsNum = data.data.goodsNum;
               this.describe = data.data.describe;
@@ -114,21 +143,21 @@
           }
         )
       },
-      goDelete(){
-        if(confirm("确认删除")){
-          service("post","/cook/delete/goods",{
-            goodsId:this.goodsId
-          }).then(data=>{
-            if(data===undefined){
+      goDelete() {
+        if (confirm("确认删除")) {
+          service("post", "/cook/delete/goods", {
+            goodsId: this.goodsId
+          }).then(data => {
+            if (data === undefined) {
               alert("服务异常，稍后再试")
               return
             }
-            if(data.code!==200){
+            if (data.code !== 200) {
               alert(data.message)
             }
-            if(data.code===200){
+            if (data.code === 200) {
               alert("删除成功")
-              window.location.href="/allMenu"
+              window.location.href = "/allMenu"
             }
           })
         }
