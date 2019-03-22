@@ -6,7 +6,7 @@
         <span @click="goBack">&lt;返回</span>
       </div>
       <div id="middle">
-        图片<input type="file" @change="getFile($event)"/><br/>
+        图片<input type="file" @change="getFile($event)" accept="image/png,image/gif,image/jpeg"/><br/>
         菜名<input type="text" v-model="name"/><br/>
         价格<input type="text" v-model="price"/><br/>
         类型<select name="goodsType" id="goodsType" v-model="type">
@@ -58,36 +58,46 @@
     methods: {
       getFile: function (event) {
         this.file = event.target.files[0];
+        if (this.file !== undefined)
+          if (this.file.size > 1048576) {
+            alert("图片大小超过1MB，请重新选择")
+          }
       },
       goInsert(event) {
-        event.preventDefault();
-        let formData = new FormData();
-        formData.append("photo", this.file);
-        formData.append("goodsName", this.name);
-        formData.append("type", this.type)
-        formData.append("price", this.price)
-        formData.append("discount", this.discount)
-        formData.append("limit", this.limit)
-        formData.append("num", this.goodsNum)
-        formData.append("describe", this.describe)
-        axios.post("/api/cook/addGoods", formData).then(response => {
-          if (response.status === 200)
-            if (response.data.code === 401) {
-              window.location.href = "/login"
+        if (this.file === "" || this.file === undefined) {
+          alert("没有选图片，请选择！")
+        } else if (this.file.size > 1048576) {
+          alert("文件大小超过1MB，请重新选择")
+        } else {
+          event.preventDefault();
+          let formData = new FormData();
+          formData.append("photo", this.file);
+          formData.append("goodsName", this.name);
+          formData.append("type", this.type)
+          formData.append("price", this.price)
+          formData.append("discount", this.discount)
+          formData.append("limit", this.limit)
+          formData.append("num", this.goodsNum)
+          formData.append("describe", this.describe)
+          axios.post("/api/cook/addGoods", formData).then(response => {
+            if (response.status === 200)
+              if (response.data.code === 401) {
+                window.location.href = "/login"
+                return
+              }
+            if (response.data.code === 200) {
+              if (confirm("添加成功，是否继续添加")) {
+                window.location.href = "/insertGoods"
+              }
+              window.location.href = "/allMenu"
               return
             }
-          if (response.data.code === 200) {
-            if (confirm("添加成功，是否继续添加")) {
-              window.location.href = "/insertGoods"
+            if (response.data.code !== 200) {
+              alert(response.data.message)
+              return
             }
-            window.location.href="/allMenu"
-            return
-          }
-          if (response.data.code !== 200) {
-            alert(response.data.message)
-            return
-          }
-        })
+          })
+        }
       },
       goBack() {
         window.location.href = "/allMenu"

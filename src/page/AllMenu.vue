@@ -10,7 +10,7 @@
       <div id="goods">
         <div class="goods" v-for="item in goodsList">
           <div id="left">
-            <img src="../assets/image/logo.jpg" alt="图片加载中" @click="getUpdateGoods(item.id)"/>
+            <img :src="item.image" alt="图片加载中" @click="getUpdateGoods(item.id)"/>
             <!--<img url="file:///D:/photo/2019-03-21-14-20-51-686timg.jpg" alt="图片加载中" @click="getUpdateGoods(item.id)"/>-->
           </div>
           <div id="right">

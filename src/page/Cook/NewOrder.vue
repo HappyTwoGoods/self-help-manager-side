@@ -36,10 +36,12 @@
     data() {
       return {
         order: null,
+        interval: null
       }
     },
-    mounted() {
+    created() {
       this.getOrder();
+      this.interval = setInterval(this.getOrder, 1000);
     },
     methods: {
       getOrder() {
@@ -90,6 +92,9 @@
           (min < 10 ? '0' + min : min) + ':' +
           (senders < 10 ? '0' + senders : senders)
       }
+    },
+    beforeDestroy() {
+      clearInterval(this.interval)
     }
   }
 </script>

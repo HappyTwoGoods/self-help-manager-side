@@ -6,7 +6,7 @@
         <span @click="goBack">&lt;返回</span>
       </div>
       <div id="middle">
-        图片<input type="file" @change="getFile($event)"/><br/>
+        图片<input id="file" type="file" @change="getFile($event)" accept="image/png,image/gif,image/jpeg"/><br/>
         <input type="button" value="更换图片" @click="changeImage($event)"/><br>
         菜名<input type="text" v-model="name"/><br/>
         价格<input type="text" v-model="price"/><br/>
@@ -65,6 +65,11 @@
     methods: {
       getFile: function (event) {
         this.file = event.target.files[0];
+        if (this.file !== undefined) {
+          if (this.file.size > 1048576) {
+            alert("文件超过1MB,请重新选择")
+          }
+        }
       },
       goChange() {
         service("post", "/cook/updateGoods", {
@@ -87,26 +92,38 @@
         })
       },
       changeImage(event) {
-        event.preventDefault();
-        let formData = new FormData();
-        formData.append("photo", this.file);
-        formData.append("goodsId", this.goodsId);
-        axios.post("/api/cook/updateGoodsImage", formData).then(response => {
-          if (response.status === 200)
-            if (response.data.code === 401) {
-              window.location.href = "/login"
-              return
-            }
-          if (response.data.code === 200) {
-            alert("修改成功")
-            // window.location.href = "/allMenu"
-            return
+        if (this.file === "" || this.file === undefined) {
+          alert("没有选择图片，请选择")
+        } else {
+          if (this.file.size > 1048576) {
+            alert("文件超过1MB,请重新选择")
+          } else {
+            event.preventDefault();
+            let formData = new FormData();
+            formData.append("photo", this.file);
+            formData.append("goodsId", this.goodsId);
+            axios.post("/api/cook/updateGoodsImage", formData).then(response => {
+              if (response.status === 200)
+                if (response.data.code === 401) {
+                  window.location.href = "/login"
+                  return
+                }
+              if (response.data.code === 200) {
+                alert("修改成功")
+                if (confirm("是否修改其他内容")) {
+                  return
+                } else {
+                  window.location.href = "/allMenu"
+                  return
+                }
+              }
+              if (response.data.code !== 200) {
+                alert(response.data.message)
+                return
+              }
+            })
           }
-          if (response.data.code !== 200) {
-            alert(response.data.message)
-            return
-          }
-        })
+        }
       },
       goBack() {
         window.location.href = "/allMenu"
