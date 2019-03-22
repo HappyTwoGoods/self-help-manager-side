@@ -18,7 +18,7 @@
       <div id="goods">
         <div class="goods" v-for="item in goodsList">
           <div id="left">
-            <img src="../../assets/image/logo.jpg" @click="getUpdateGoods(item.id)"/>
+            <img :src="item.image" @click="getUpdateGoods(item.id)"/>
           </div>
           <div id="right">
             <table cellspacing="0px">

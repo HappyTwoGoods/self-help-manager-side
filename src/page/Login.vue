@@ -8,7 +8,7 @@
       </div>
       <div id="input">
         <input id="username" type="text" placeholder="请输入用户名"/>
-        <input id="password" type="text" placeholder="请输入密码"/>
+        <input id="password" type="password" placeholder="请输入密码"/>
       </div>
       <div class="login"><span @click="getLogin(1)">厨师登录</span></div>
       <div class="login"><span @click="getLogin(2)">管理员登录</span></div>
